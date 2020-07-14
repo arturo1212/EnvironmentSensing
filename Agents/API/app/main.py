@@ -21,7 +21,7 @@ def dict_factory(cursor, row):
 
 def readSqliteTable():
     try:
-        sqliteConnection = sqlite3.connect('../../demoenv.db')
+        sqliteConnection = sqlite3.connect('db/demoenv.db')
         sqliteConnection.row_factory = dict_factory
         cursor = sqliteConnection.cursor()
         print("Connected to SQLite")
