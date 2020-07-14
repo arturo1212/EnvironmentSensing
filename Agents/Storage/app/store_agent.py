@@ -51,12 +51,12 @@ def on_message(client, userdata, msg):
     
     # Store received message
     parsed_msg = str(msg.payload).split(",")
-    conn = sqlite3.connect('../../demoenv.db')
+    conn = sqlite3.connect('/db/demoenv.db')
     insertVaribleIntoTable(conn, parsed_msg[0][2:], parsed_msg[1], parsed_msg[2], datetime.now().isoformat()) # parsed_msg[0][2:]
     conn.close()
 
 """
-conn = sqlite3.connect('demoenv.db')
+conn = sqlite3.connect('/db/demoenv.db')
 createReadTable(conn)
 conn.close()
 """
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     client.on_connect = on_connect
     client.on_message = on_message
 
-    client.connect("192.168.0.2", 1883, 60)
+    client.connect("192.168.0.12", 1883, 60)
     client.loop_forever()
 
 
