@@ -4,6 +4,7 @@ from datetime import datetime
 import flask
 import json
 from flask_cors import CORS, cross_origin
+from flask import request
 
 active_sensors = ['balcony', 'kitchen']
 
@@ -19,7 +20,7 @@ def dict_factory(cursor, row):
         d[col[0]] = row[idx]
     return d
 
-def readSqliteTable():
+def readSqliteTable(num_records, agentid):
     try:
         sqliteConnection = sqlite3.connect('/db/demoenv.db')
         sqliteConnection.row_factory = dict_factory
@@ -29,9 +30,10 @@ def readSqliteTable():
         aux = 0
         sqlite_select_query += """
                 SELECT ID, TEMPERATURE, HUMIDITY, datetime(RECPT_DT) as RECPT_DT from ENV_READ
+                WHERE agentid = '%s'
                 ORDER BY datetime(RECPT_DT) DESC
-                LIMIT 10 
-                """
+                LIMIT %s
+                """ % (agentid, num_records)
         cursor.execute(sqlite_select_query)
         data = cursor.fetchall()
         print(data)
@@ -49,7 +51,9 @@ readSqliteTable()
 @app.route('/sensor_history', methods=['GET'])
 @cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def sensor_history():
-    return json.dumps({'result': readSqliteTable()})
+    num_records = request.args.get('num_records')
+    agentid = request.args.get('agentid')
+    return json.dumps({'result': readSqliteTable(num_records, agentid)})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=5000)
