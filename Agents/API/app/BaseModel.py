@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship, backref
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-database_path = "sqlite:///demoenv.db"
+database_path = "sqlite:////db/demoenv.db"
 db = SQLAlchemy()
 
 class User(db.Model):
