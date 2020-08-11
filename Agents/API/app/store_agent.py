@@ -26,7 +26,6 @@ with app.app_context():
 
     # The callback for when a PUBLISH message is received from the server.
     def on_message(client, userdata, msg):
-        print(msg.topic + ": " + str(msg.payload))
         parsed_msg = str(msg.payload).split(",")
         create_env_record(parsed_msg[0][2:], parsed_msg[1], parsed_msg[2], parsed_msg[3]) # parsed_msg[0][2:]
 

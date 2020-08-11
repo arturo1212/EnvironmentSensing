@@ -16,7 +16,7 @@ def row2dict(row):
     return d
 
 with app.app_context():
-    #db.create_all()
+    db.create_all()
     # Create the Flask-Restless API manager. (/api/{tablename})
     manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)
     manager.create_api(User, methods=['GET', 'POST', 'DELETE', 'PATCH'])
@@ -39,5 +39,5 @@ with app.app_context():
         user.agents.append(agent)
         db.session.commit()
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    if __name__ == "__main__":
+        app.run(host='0.0.0.0', debug=True, port=5000)
