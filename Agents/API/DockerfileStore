@@ -1,5 +1,6 @@
-FROM crawforc3/raspberrypi-uwsgi-nginx-flask
-ENV LISTEN_PORT 5000
+FROM python:3
+COPY ./app /app
+WORKDIR /app
 # copy over our requirements.txt file
 COPY requirements.txt /
 
@@ -7,6 +8,5 @@ COPY requirements.txt /
 RUN pip install --no-cache-dir -U pip
 RUN pip install --no-cache-dir -r /requirements.txt
 
-# copy over our app code
-COPY ./app /app
-EXPOSE 5000
+ENTRYPOINT ["python"]
+CMD ["store_agent.py"]
