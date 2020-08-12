@@ -21,8 +21,8 @@ class Agent(db.Model):
     mac_address = db.Column(db.String, primary_key=True)
     alias = db.Column(db.String, nullable=False, default="No Alias")
     users = relationship("User", secondary=lambda: agent_user_association.__table__)
-    events = relationship("AgentEvent", backref="agent")
-    reads = relationship("EnvironmentRead", backref="agent")
+    events = relationship("AgentEvent", backref="agent", lazy="dynamic")
+    reads = relationship("EnvironmentRead", backref="agent", lazy="dynamic")
 
 class agent_user_association(db.Model):
     __tablename__ = 'agent_user_association'

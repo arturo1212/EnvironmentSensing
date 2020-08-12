@@ -32,7 +32,7 @@ with app.app_context():
         agent = Agent.query.filter_by(mac_address=agentid).first()
         events = agent.events.limit(num_events).all()
         reads = agent.reads.limit(num_events).all()
-        return json.dumps({"mac_address": agent.mac_address, "reads":[row2dict(r) for r in reads], "events":[row2dict(r) for r in reads] })
+        return json.dumps({"mac_address": agent.mac_address, "reads":[row2dict(r) for r in reads], "events":[row2dict(r) for r in events] })
         #return  json.dumps([dict(r) for r in result]) 
 
     def addAgentToUser(user, agent):
